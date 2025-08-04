@@ -1,0 +1,7 @@
+fix note = """This is a small note
+   who can make paragraphs"""
+fix note_color = """\033[0;31mThis is a small note
+   who can make paragraphs with color\033[0m"""
+
+put note
+put note_color

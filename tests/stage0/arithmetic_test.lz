@@ -1,0 +1,34 @@
+# Test basic arithmetic operations
+put "Basic operations"
+put 5 + 3
+put 10 - 4
+put 6 * 7
+put 20 / 4
+put 17 // 5
+put 17 % 5
+
+# Test with variables
+var a = 10
+var b = 3
+put "With Variables"
+put a + b
+put a - b
+put a * b
+put a / b
+put a // b
+put a % b
+
+# Test operator precedence
+put "Test operator precedence"
+put 2 + 3 * 4
+# put (2 + 3) * 4  # This will need parentheses support later
+put 10 - 6 / 2
+
+# Test mixed types
+put 5 + 2.5
+put 10.0 - 3
+put 3.14 * 2
+
+# Test string concatenation
+put "Hello " + "World"
+put "Number: " + 42
