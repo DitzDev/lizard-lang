@@ -30,6 +30,8 @@ enum class TokenType {
   INT_DIVISION, // //
 
   // Punctuation
+  LEFT_PAREN,   // (
+  RIGHT_PAREN,  // )
   NEWLINE,
   EOF_TOKEN
 };

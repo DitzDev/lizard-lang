@@ -12,26 +12,8 @@ endif()
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-set(LIZARD_SOURCES
-    src/main.cpp
-    src/error/error_handler.cpp
-    src/lexer/lexer.cpp
-    src/lexer/lexer_identifier.cpp
-    src/lexer/lexer_keywords.cpp
-    src/lexer/lexer_number.cpp
-    src/lexer/lexer_state.cpp
-    src/lexer/lexer_string.cpp
-    src/lexer/lexer_arithmetic.cpp
-    src/parser/parser.cpp
-    src/parser/parser_print.cpp
-    src/parser/parser_variable.cpp
-    src/parser/parser_arithmetic.cpp
-    src/evaluator/evaluator.cpp
-    src/evaluator/eval_print.cpp
-    src/evaluator/eval_variable.cpp
-    src/evaluator/eval_arithmetic.cpp
-    src/types/environment.cpp
-    src/types/value.cpp
+file(GLOB_RECURSE LIZARD_SOURCES CONFIGURE_DEPENDS
+    ${CMAKE_SOURCE_DIR}/src/*.cpp
 )
 
 add_executable(lizard ${LIZARD_SOURCES})

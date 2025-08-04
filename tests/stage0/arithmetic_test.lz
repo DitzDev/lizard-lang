@@ -20,15 +20,39 @@ put a % b
 
 # Test operator precedence
 put "Test operator precedence"
-put 2 + 3 * 4
-# put (2 + 3) * 4  # This will need parentheses support later
-put 10 - 6 / 2
+put 2 + 3 * 4        # Should be 14 (3*4 + 2)
+put (2 + 3) * 4      # Should be 20 (5 * 4)
+put 10 - 6 / 2       # Should be 7 (10 - 3)
+put (10 - 6) / 2     # Should be 2 (4 / 2)
 
-# Test mixed types
-put 5 + 2.5
-put 10.0 - 3
-put 3.14 * 2
+# Test nested parentheses
+put "Test nested parentheses"
+put ((2 + 3) * 4) - 1    # Should be 19 ((5 * 4) - 1)
+put 2 * (3 + (4 * 5))    # Should be 46 (2 * (3 + 20))
+put (2 + 3) * (4 + 5)    # Should be 45 (5 * 9)
 
-# Test string concatenation
-put "Hello " + "World"
-put "Number: " + 42
+# Test unary operators
+put "Test unary operators"
+put -5               # Should be -5
+put +10              # Should be 10
+put -(2 + 3)         # Should be -5
+put +(4 * 2)         # Should be 8
+put -a               # Should be -10 (where a = 10)
+
+# Test mixed types with parentheses
+put "Test mixed types with parentheses"
+put (5 + 2.5) * 2    # Should be 15.0
+put 10.0 - (3 * 2)   # Should be 4.0
+put (3.14 * 2) + 1   # Should be 7.28
+
+# Test string concatenation with parentheses
+put "Test string with parentheses"
+put "Result: " + (5 + 3)        # Should be "Result: 8"
+put ("Hello " + "World") + "!"  # Should be "Hello World!"
+put "Answer: " + ((2 + 3) * 4)  # Should be "Answer: 20"
+
+# Complex expressions
+put "Complex expressions"
+put (a + b) * (a - b)           # Should be 91 ((10+3) * (10-3))
+put ((a * 2) + b) / (a - 7)     # Should be 7.67 approximately
+put -((a + b) - (a * b))        # Should be -17 (-((10+3) - (10*3)))

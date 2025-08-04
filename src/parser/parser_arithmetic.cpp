@@ -40,7 +40,22 @@ ASTNodePtr ArithmeticParser::parseMultiplication() {
 }
 
 ASTNodePtr ArithmeticParser::parseUnary() {
-    // For now, just parse primary. Later can add unary minus/plus
+    if (parser->match(TokenType::MINUS) || parser->match(TokenType::PLUS)) {
+        Token op_token = parser->previous();
+        Position op_pos = op_token.position;
+        auto expr = parseUnary();
+        
+        // For unary minus, create a binary expression: 0 - expr
+        // For unary plus, just return the expression as-is
+        if (op_token.type == TokenType::MINUS) {
+            auto zero = std::make_unique<Literal>(Token(TokenType::INTEGER, "0", op_pos));
+            BinaryOperator op = BinaryOperator::SUBTRACT;
+            return std::make_unique<BinaryExpression>(std::move(zero), op, std::move(expr), op_pos);
+        } else {
+            return expr; // Unary plus does nothing
+        }
+    }
+    
     return parsePrimary();
 }
 
@@ -55,12 +70,18 @@ ASTNodePtr ArithmeticParser::parsePrimary() {
         return std::make_unique<Identifier>(parser->previous().value, parser->previous().position);
     }
     
-    // TODO: Add parentheses support later
-    // if (parser->match(TokenType::LEFT_PAREN)) {
-    //     auto expr = parseExpression();
-    //     parser->consume(TokenType::RIGHT_PAREN, "Expected ')' after expression");
-    //     return expr;
-    // }
+    // Handle parentheses for grouping
+    if (parser->match(TokenType::LEFT_PAREN)) {
+        Position paren_pos = parser->previous().position;
+        auto expr = parseExpression();
+        
+        if (!parser->match(TokenType::RIGHT_PAREN)) {
+            ErrorHandler::reportError("Expected ')' after expression", parser->peek().position);
+            return nullptr;
+        }
+        
+        return expr; // Return the grouped expression
+    }
     
     ErrorHandler::reportError("Expected expression", parser->peek().position);
     return nullptr;

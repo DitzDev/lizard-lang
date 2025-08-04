@@ -45,6 +45,12 @@ std::vector<Token> Lexer::tokenize() {
             state.advance();
         } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%') {
             tokens.push_back(parseArithmeticOperator(state));
+        } else if (c == '(') {
+            tokens.emplace_back(TokenType::LEFT_PAREN, "(", state.getCurrentPosition());
+            state.advance();
+        } else if (c == ')') {
+            tokens.emplace_back(TokenType::RIGHT_PAREN, ")", state.getCurrentPosition());
+            state.advance();
         } else {
             ErrorHandler::reportError("Unexpected character '" + std::string(1, c) + "'", state.getCurrentPosition());
         }
